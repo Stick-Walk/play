@@ -3,19 +3,19 @@
 <head>
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 <script>
-	var ws = new WebSocket("ws://localhost:47477/");
+	var ws = new WebSocket("wss://ws.postman-echo.com/raw");
 	window.RufflePlayer.config = {
 		  autoplay: "auto",
 		  socketProxy: [
 		    {
 		      host: "173.236.42.2", // The address of the server that Flash tries to connect to
 		      port: 443, // The port that Flash tries to connect to
-		      proxyUrl: "ws://localhost:47477", // The actual proxy that Ruffle will connect to, instead of the above server
+		      proxyUrl: "wss://ws.postman-echo.com/raw", // The actual proxy that Ruffle will connect to, instead of the above server
 		    },
 		    {
 		      host: "108.163.215.218", // The address of the server that Flash tries to connect to
 		      port: 443, // The port that Flash tries to connect to
-		      proxyUrl: "ws://localhost:47477", // The actual proxy that Ruffle will connect to, instead of the above server
+		      proxyUrl: "wss://ws.postman-echo.com/raw", // The actual proxy that Ruffle will connect to, instead of the above server
 		    },
 		  ]
 	};
