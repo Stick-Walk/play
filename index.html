@@ -1,0 +1,725 @@
+
+<html>
+<head>
+<script type="text/javascript" src="swfobject.js"></script>
+<script type="text/javascript">
+var lifetime = 0;
+var overlayframe;
+var overlaywrapper;
+var closebtn;
+var closebtn_active;
+var dimmer;
+var ads;
+var ad_i;
+function init()
+{
+	setTimeout(checkSwfBlock,20000);
+	//setTimeout(callURL,10000,"async.php");
+	//idleInterval = setInterval(timerIncrement, 6000);
+	overlayframe = document.getElementById("overlayframe");
+	overlaywrapper = document.getElementById("overlaywrapper");
+	closebtn = document.getElementById("closebtn");
+	closebtn_active = document.getElementById("closebtn_active");
+	dimmer = document.getElementById("dimmer");	
+}
+function nextAd(){
+	ads[ad_i].style.display = "none";
+	ad_i++;
+	if(ad_i>=ads.length)
+		ad_i = 0;
+	ads[ad_i].style.display = "block";
+}
+function checkSwfBlock(){
+	if(swf_placed || !document.getElementById("srclient"))
+		return;
+	console.log("Please activate Flash Player");
+	/*document.getElementById("failedswf").innerHTML = '<div style="padding: 20px;" align="center"><label style="font-size: 16pt;">You need Flash-Player to play this game! Get it <a href="https://get.adobe.com/de/flashplayer/" target="_blank">here</a></label><br><br><label style="font-size: 14pt;">Also available:</label><br><div style="position: relative; width: 400px;"><img src="srmobile.jpg"><a href="https://itunes.apple.com/de/app/stick-run-mobile-free/id678882055" target="_blank"><img src="appstore.png" style="position: absolute; top: 62px; left: 130px;"></a><a href="https://play.google.com/store/apps/details?id=com.nekki.stickrun.free" target="_blank"><img src="googleplay.png" style="position: absolute; top: 62px; left: 250px;"></a></div></div>';*/
+}
+// This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI(response.authResponse.accessToken);
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '337817720152001',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.8' // use graph api version 2.8
+    });
+	FB.Canvas.setSize({ width: 800, height: 1000 });
+
+
+    // Now that we've initialized the JavaScript SDK, we call 
+    // FB.getLoginStatus().  This function gets the state of the
+    // person visiting this page and can return one of three states to
+    // the callback you provide.  They can be:
+    //
+    // 1. Logged into your app ('connected')
+    // 2. Logged into Facebook, but not your app ('not_authorized')
+    // 3. Not logged into Facebook and can't tell if they are logged into
+    //    your app or not.
+    //
+    // These three cases are handled in the callback function.
+
+    FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+	      var uid = response.authResponse.userID;
+          var accessToken = response.authResponse.accessToken;
+		  testAPI(accessToken);
+	  } else if(response.status === 'not_authorized') {
+	     FB.login(function(response) {
+		  statusChangeCallback(response);
+		 });
+	  } else {
+	    // The person is not logged into your app or we are unable to tell.
+	    document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+	  }
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI(accessToken) {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me?fields=first_name,id,name', function(response) {
+      console.log('Successful login for: ' + response.name);
+      //document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+	  
+	  var uid = document.getElementById('uidinfo');
+	  uid.innerHTML =  ' <font color="#ffffff" size="2">Your ID: ' + response.id + '</font>';
+	  
+	  var flashvars = {
+          stamp1: 0,
+          stamp2: 0,
+          stamp3: 0,
+          stamp4: 0,
+          stamp5: 0,
+		  stamp6: 0,
+          stamp7: 0,
+          stamp8: 0,
+          stamp9: 0,
+          stamp10: 0,
+		  stamp11: 0,
+          stamp12: 0,
+          stamp13: 0,
+          stamp14: 0,
+          stamp15: 0,
+		  stamp16: 0,
+          stamp17: 0,
+          stamp18: 0,
+          stamp19: 0,
+          stamp20: 0,
+		  stamp21: 0,
+          stamp22: 0,
+          stamp23: 0,
+          stamp24: 0,
+		  warning: "",
+		  accessToken: "",
+		  fb_name: "",
+		  fb_uid: "",
+		  locale: "",
+		  join_room: "",
+		  namehash: "",
+          first_name: "",
+		  currency: "",
+		  donations: 0,
+		  girl: false
+      };
+	  
+	  var params = {};
+      params.allowfullscreen = "true";
+      params.wmode = "opaque";
+      params.allowscriptaccess = "always";
+      params.allownetworking = "always";
+      params.allowFullScreenInteractive = "true";
+	  
+	  var attributes = {};
+	  attributes.id = "srclient";
+	  attributes.name = "status";
+	  
+      flashvars['stamp1'] = 0,
+	  flashvars['stamp2'] = 0,
+	  flashvars['stamp3'] = 0,
+	  flashvars['stamp4'] = 0,
+	  flashvars['stamp5'] = 0,
+	  flashvars['stamp6'] = 0,
+	  flashvars['stamp7'] = 0,
+	  flashvars['stamp8'] = 0,
+	  flashvars['stamp9'] = 0,
+	  flashvars['stamp10'] = 0,
+	  flashvars['stamp11'] = 0,
+	  flashvars['stamp12'] = 0,
+	  flashvars['stamp13'] = 0,
+	  flashvars['stamp14'] = 0,
+	  flashvars['stamp15'] = 0,
+	  flashvars['stamp16'] = 0,
+	  flashvars['stamp17'] = 0,
+	  flashvars['stamp18'] = 0,
+	  flashvars['stamp19'] = 0,
+	  flashvars['stamp20'] = 0,
+	  flashvars['stamp21'] = 0,
+	  flashvars['stamp22'] = 0,
+	  flashvars['stamp23'] = 0,
+	  flashvars['stamp24'] = 0,
+	  flashvars['warning'] = "",
+	  flashvars['accessToken'] = accessToken,
+      flashvars['fb_name'] = response.name,
+      flashvars['fb_uid'] = response.id,    
+      flashvars['locale'] = 'en_US',	  
+      flashvars['join_room'] = "",
+	  flashvars['namehash'] = "c99534426bff26688a9a748e54912e1d",  
+	  flashvars['first_name'] = response.first_name,
+	  flashvars['currency'] = "USD",
+	  flashvars['donations'] = 0,
+	  flashvars['girl'] = "true";
+	  _flashvars = flashvars;
+	  
+      swfobject.switchOffAutoHideShow();
+	  swfobject.embedSWF("https://r.playerio.com/r/danilo-cool-game-z6ru7vwfzeutdwalmweug/trtest.swf", "status", "600", "450", "9.5", attributes, flashvars, params, {});
+	  	  
+    });
+  }
+  
+function getFlashvars(){    
+    return _flashvars;
+}
+  
+function buyPrem(id){
+	document.getElementById("srclient").buyItem(id)
+}
+function payDialog(obj) {
+		FB.ui(obj, function(data) {
+		console.log(JSON.stringify(data));
+				document.getElementById("srclient").payResults(data);
+			});
+};
+function inviteFriends(){
+	FB.ui({method: 'apprequests',
+      message: 'Check this game out',
+	  filters: ['app_non_users']
+    }, function(response){
+        
+    });
+}
+function inviteLevel(data){
+	FB.ui({method: 'apprequests',
+      message: 'Check out my level "'+data.name+'" - I bet you cant run it!',
+	  data:"level:"+data.id
+    }, function(response){
+        
+    });
+}
+var swf_placed = false;
+function placed(e){
+	//document.getElementById("loadingdisplay").style.display = "block";
+	//document.getElementById("srclient").style.visibility = "hidden";
+}
+function game_show(){
+	document.getElementById("loadingdisplay").style.display = "none";
+	document.getElementById("srclient").style.visibility = "visible";
+}
+function game_loaded(){
+	document.getElementById("loadingdisplay").style.display = "none";
+	document.getElementById("srclient").style.visibility = "visible";
+	swf_placed = true;
+	document.getElementById("failedswf").style.display = "none";
+}
+var logged_in = false;
+function game_loggedin(){
+    console.log('logged into stickrun account');
+	logged_in = true;
+
+}
+function callURL(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+	
+	return xmlHttp.responseText;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+function showVideoAd(){
+	//invokeApplixirVideoUnitExtended(false, 'top+50', videoAdShown);
+}
+function videoAdShown(){
+	callURL("timeforad.php?seen");
+}
+function openPremShop(){
+	if(logged_in)
+	 document.getElementById("srclient").openPremShop("blackfriday");
+}
+function removeAds(){
+	if(logged_in)
+	 document.getElementById("srclient").removeAds();
+}
+function hideAds(){
+	return;
+	 document.getElementById("frame1").style.display = "none";
+	 document.getElementById("frame2").style.display = "none";
+	 document.getElementById("frame3").style.display = "none";
+	 document.getElementById("content").style.width = "610px";
+}
+
+function checkAdblock(){
+	return;
+	if(typeof LSM_Slot != "function")
+		showSad();
+}
+function showSad(){
+	//swfobject.embedSWF("sidesadcats.swf", "sidesadcats1", "160", "600", "10.0", null, {}, {allowscriptaccess:"always",allownetworking:"always",allowFullScreen:"true",allowFullScreenInteractive:"true",wmode:"opaque"}, {})
+	//swfobject.embedSWF("sidesadcats.swf", "sidesadcats2", "160", "600", "10.0", null, {}, {allowscriptaccess:"always",allownetworking:"always",allowFullScreen:"true",allowFullScreenInteractive:"true",wmode:"opaque"}, {})
+}
+
+var targetWidth = 600;
+var targetHeight = 450;
+var enlarged = false;
+function toggleEnlarge(){
+	enlarged = !enlarged;
+	if(enlarged){
+		targetWidth = 800
+		targetHeight = 600
+	}else{
+		targetWidth = 600;
+		targetHeight = 450;
+	}
+	en_upd();
+	document.cookie = "enlarged="+enlarged.toString()+";expires=Sun, 1 Jan 2016 12:00:00 UTC";
+}
+function en_upd(){
+	var cw = parseInt(document.getElementById("srclient").width);
+	var ch = parseInt(document.getElementById("srclient").height);
+	if(Math.abs(targetWidth-cw)<1 && Math.abs(targetHeight-ch)<1){
+		document.getElementById("srclient").width = targetWidth;
+		document.getElementById("srclient").height = targetHeight;
+	}else
+		setTimeout(en_upd,25)
+	document.getElementById("srclient").width = cw + (targetWidth-cw)/1.7;
+	document.getElementById("srclient").height = ch + (targetHeight-ch)/1.7;
+}
+
+var finalEnlarge = false;
+function offerEnlarge(didlike){
+	return;
+	resizeoffer.style.display = "block";
+	setTimeout(tweenOffer,25)
+	if(didlike){
+		document.getElementById("question_field").innerHTML = "Do you like it?"
+		finalEnlarge = true;
+	}
+}
+function closeOffer(){
+	if(finalEnlarge){
+		toggleEnlarge();
+	}
+	resizeoffer.style.display = "none";
+}
+function tweenOffer(){
+	if(parseFloat(resizeoffer.style.opacity)<1){
+		resizeoffer.style.opacity = parseFloat(resizeoffer.style.opacity) + 0.1;
+		setTimeout(tweenOffer,25)
+	}else{
+		resizeoffer.style.opacity = 1;
+	}
+}
+function getWidth() {
+  if (self.innerWidth) {
+    return self.innerWidth;
+  }
+
+  if (document.documentElement && document.documentElement.clientWidth) {
+    return document.documentElement.clientWidth;
+  }
+
+  if (document.body) {
+    return document.body.clientWidth;
+  }
+}
+function getHeight() {
+  if (self.innerHeight) {
+    return self.innerHeight;
+  }
+
+  if (document.documentElement && document.documentElement.clientHeight) {
+    return document.documentElement.clientHeight;
+  }
+
+  if (document.body) {
+    return document.body.clientHeight;
+  }
+}
+function tryEnlarge(){
+	if(finalEnlarge){
+		resizeoffer.style.display = "none";
+		return;
+	}
+	toggleEnlarge();
+	closeOffer();
+	if(!finalEnlarge)
+	setTimeout(offerEnlarge,1000,true);
+}
+
+var marketroom_embed = false;
+function testroom_connect(){
+	
+}
+function testroom_close(reason){
+}
+
+window.addEventListener('resize', setWindowSize);
+
+var ads_shown = false;
+function setWindowSize() {
+ myWidth = getWidth();
+  if(myWidth>1000){
+	  if(!ads_shown){
+		  showAds()
+	  }
+  }else{
+	  if(ads_shown){
+		  hideAds()
+	  }
+  }
+}
+var ads_disabled = false;
+function showAds(){
+	if(!ads_disabled){
+		document.getElementById("ads_left").style.display = "block";
+		document.getElementById("ads_right").style.display = "block";
+	}
+	ads_shown = true;
+}
+function hideAds(){
+	document.getElementById("ads_left").style.display = "none";
+	document.getElementById("ads_right").style.display = "none";
+	ads_shown = false;
+}
+var hide_questions = ["This will hide the ads...","Do you really want to hide the ads?","Are you really sure about this?","Okay, let me think about it...","...","...","...","Hm ok... do you still want to do this?","k fine >.>"]
+function promptHideAds(){
+	for(i=0;i<hide_questions.length;i++){
+		if(!confirm(hide_questions[i]))
+			return;
+	}
+	ads_disabled = true;
+	hideAds();
+}
+
+var idleTime = 0;
+var idleInterval;
+
+document.onmousemove = function (e) {
+        idleTime = 0;
+    };
+document.onkeypress = function (e) {
+        idleTime = 0;
+    };
+function timerIncrement() {
+    idleTime++;
+    if (idleTime > 15) {
+		 if(getWidth()>500)
+        spawnAdInterstital();
+		idleTime = 0;
+    }
+}
+
+function spawnAdInterstital(){
+	if(true)
+		return;
+	var smallstr = "";
+	var cw = 600;
+	var ch = 300;
+	if(getWidth()<720 || true){	
+		smallstr = "?small";
+		cw = 300
+		ch = 250
+	}
+	openOverlay("ads/inactive.php"+smallstr,interstitalClosed,cw,ch)
+}
+function interstitalClosed(){
+	
+}
+
+var overlay_active = false;
+var overlay_cb = false;
+var overlay_width;
+var overlay_height;
+var overlay_timeout;
+function openOverlay(src,cb,alt_width,alt_height){
+	if(alt_width)
+		overlay_width = alt_width
+	else
+		overlay_width = null
+	if(alt_height)
+		overlay_height = alt_height
+	else
+		overlay_height = null
+	overlayframe.src = src;
+	overlayframe.style.display = "none";
+	dimmer.style.display = "block";
+	overlaywrapper.style.opacity = 0;
+	fadeTo(dimmer,0.5,0,"opacity",false);
+	overlay_cb = cb;
+	positionOverlay();
+	if(overlay_timeout)
+		clearTimeout(overlay_timeout)
+	overlay_timeout = setTimeout(overlayTimeout,5000)
+	overlayInit();
+}
+function overlayInit(){
+	clearTimeout(overlay_timeout)
+	overlaywrapper.style.display = "block";
+	overlayframe.style.display = "block";
+	fadeTo(overlaywrapper,1,0,"opacity",false);
+	overlay_active = true;
+}
+function overlayTimeout(){
+	closeOverlay();
+}
+function emptyOverlay(){
+	if(overlay_active)
+		closeOverlay();
+}
+function positionOverlay(){
+	var w = getWidth();
+	var h = getHeight();
+	if(overlay_width){
+		var ovW = overlay_width;
+		var ovH = overlay_height;
+	}else{
+		var ovScale = Math.max(Math.min(0.92,1.4-(w+h)/3000),0.66)
+		var ovW = w*ovScale;
+		var ovH = h*ovScale;
+	}
+	var ovX = (w-ovW)/2
+	var ovY = 140
+	overlaywrapper.style.top = ovY
+	overlaywrapper.style.left = ovX
+	overlayframe.style.width = ovW
+	overlaywrapper.style.width = ovW+20
+	overlayframe.style.height = ovH
+	overlaywrapper.style.height = ovH+20
+}
+function overCloseOv(){
+	fadeTo(closebtn,0,1,"opacity",false)
+	fadeTo(closebtn_active,1,0,"opacity",false)
+}
+function outCloseOv(){
+	fadeTo(closebtn,1,0,"opacity",false)
+	fadeTo(closebtn_active,0,1,"opacity",false)
+}
+function closeOverlay(){
+	fadeTo(overlaywrapper,0,1,"opacity",true);
+	fadeTo(dimmer,0,0.5,"opacity",true);
+	overlay_active = false;
+	overlay_cb();
+	overlay_cb = null;
+}
+
+function shareLink(link){
+	console.log("share: "+link);
+	FB.ui({
+	  method: 'share',
+	  href: link,
+	}, function(response){
+		console.log("share complete: "+JSON.stringify(response));
+		if(response.post_id)
+			document.getElementById("srclient").shareComplete(true);
+		else
+			document.getElementById("srclient").shareComplete(false);
+	});
+}
+
+function dummy_func(){
+	
+}
+
+(function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+      }(document));
+</script>
+<style type="text/css">
+@font-face {
+    font-family: Sansation_Light;
+    src: url(Sansation_Light.ttf);
+}
+body{
+	font-family: Sansation_Light;
+}
+.lotterybtn{
+	border-radius: 0px; 
+	cursor: pointer; 
+	background-image: url(https://stick.run/lottery/icon.png); 
+	background-position: 9px center; 
+	background-color: #f09100; 
+	width: 250px; 
+	height: 26px; 
+	padding-top: 8px; 
+	background-repeat: 
+	no-repeat; 
+	padding-left: 50px; 
+	color: white; 
+	margin-bottom: 3px;
+}
+.lotterybtn:hover{
+	background-color: #fe9e0b;
+}
+.lotterybtn:active{
+	background-color: #b97000;
+}
+.newsbtn{
+	border-radius: 0px; 
+	cursor: pointer; 
+	background-image: url(https://stick.run/news/icon.png); 
+	background-position: 10px center; 
+	background-color: #21A54F; 
+	width: 250px; 
+	height: 26px; 
+	padding-top: 8px; 
+	background-repeat: 
+	no-repeat; 
+	padding-left: 50px; 
+	color: white; 
+	margin-bottom: 3px;
+}
+.newsbtn:hover{
+	background-color: #24B255;
+}
+.newsbtn:active{
+	background-color: #1C8B43;
+}
+.eventsbtn{
+	border-radius: 0px; 
+	cursor: pointer; 
+	background-image: url(https://stick.run/events/icon.png); 
+	background-position: 9px center; 
+	background-color: #7114CA; 
+	width: 250px; 
+	height: 26px; 
+	padding-top: 8px; 
+	background-repeat: 
+	no-repeat; 
+	padding-left: 50px; 
+	color: white; 
+	margin-bottom: 3px;
+}
+.eventsbtn:hover{
+	background-color: #7815D7;
+}
+.eventsbtn:active{
+	background-color: #6311B0;
+}
+.uidinfo{
+	font-size: 8pt;
+	color: #ffffff;
+}
+</style>
+<script type="text/javascript" src="tweener.js" async></script>
+</head>
+<body onload="init()"; bgcolor = "#0f0f0f";>
+<div id="overlaywrapper" style="border-radius: 16px; z-index: 20; display: none; position: absolute; top: 300px; left: 400px; width: 600px; height: 500px; background-color: #FFFFFF; box-shadow: 0px 0px 36px -20px rgba(0,0,0,0.75);"><div style="position: absolute; right: 42px; top: 5px; cursor: pointer;"><img id="closebtn" src="closebtn.png" style="position: absolute; top: 0; left: 0;"><img id="closebtn_active" onmouseover="overCloseOv()" onmouseout="outCloseOv()" onclick="closeOverlay()" src="closebtn_active.png" style="opacity: 0; position: absolute; top: 0; left: 0;"></div><iframe id="overlayframe" frameborder="0" style="border: none; margin: 10px 10px 10px 10px; padding: 0;" src=""></iframe></div>
+<div id="dimmer" style="display: none; position: absolute; width: 100%; height: 100%; background-color: #000000; opacity: 0;z-index: 10; top:0; left:0;"></div>
+<div id="resizeoffer" style=" display: none; opacity: 0; position: absolute; z-index: 300; width: 100%; height: 100%;" align="center">
+<div align="left" style="padding: 25px; width: 400px; height: 200px; background-color: #FFFFFF; box-shadow: 0px 0px 30px -10px #000000; margin-top:112px;background-image: url(niceguy.png);background-repeat:no-repeat;background-position:bottom left;">
+<label style="font-size: 16pt; color: #333333;" id="question_field">Would you like to enlarge the game?</label>
+<div style="width: 250px; height: 100px; float: right; padding: 10px; margin-top: 15px;">
+<div onclick="tryEnlarge()" onmouseover="this.style.background='#48BDFF'" onmouseout="this.style.background='#1FAAF7'" style="cursor: pointer; width: 100px; height: 20px; padding: 10px; border-radius: 5px; background-color:#1FAAF7; color:#FFFFFF; float: left;" align="center">
+Yes
+</div>
+<div onclick="closeOffer()" onmouseover="this.style.background='#FF3F3F'" onmouseout="this.style.background='#F71F1F'" style="cursor: pointer; width: 100px; height: 20px; padding: 10px; border-radius: 5px; background-color:#F71F1F; color:#FFFFFF; float: right;" align="center">
+No
+</div>
+</div>
+</div>
+</div>
+
+<div id="ads_left" style="display: none; position: absolute; left: 0px; top: 20px;">
+</div>
+<div id="ads_right" style="display: none; position: absolute; right: 0px; top: 20px;">
+<br>
+<label  onclick="promptHideAds(); " style="float: right; color:#DDDDDD; font-size: 7pt;">hide ads</label>
+</div>
+
+<div align='center'>
+<div id='gameswf' align='center'>
+<div style="position: relative; top: -5px; left: -8px; display: inline-block;" class="fb-like" data-href="https://www.facebook.com/officialtraderun" data-width="420" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+<a href="" target="_blank"><img src="team.png"></a>
+<div id="fb-root"></div>
+<div id="loadingdisplay" style="display: none; width: 600px; height: 450px; z-index: 100; position: relative;" align="center">
+<div style="width: 200px; margin-top: 200px;">
+<img src="loadgif.gif"><label style="font-size: 14pt; font-weight: bold; color: #272727; position: relative; top: -8px; left: 6px;">Loading Game ...</label>
+</div>
+</div>
+
+
+		<div id="status" style="width: 600px; height: 450px; background-color:white;">
+				
+			<div style="padding-top: 120px;" align="center">
+			<a href="https://get.adobe.com/de/flashplayer/" target="_blank"><img src="fppls.png"></a>
+						</div>
+		
+				</div>
+
+<div id="failedswf" style="">
+</div>
+</div>
+<div style="width: 600px; height: 250px; margin-top: 4px;">
+<div style="width: 300px; float: right;">
+<a target="_blank" href=""><img src="sm3.png"></a>
+</div>
+<div style="width: 300px; float: left;" align="left">
+<div onclick="openOverlay('',dummy_func,540,325)" class="newsbtn" align="left">News</div>
+<div onclick="openOverlay('',dummy_func,640,325)" class="lotterybtn" align="left">Lottery winners</div>
+<div onclick="openOverlay('',dummy_func,280,400)" class="eventsbtn" align="left">Giveaways</div>
+<a href="https://www.facebook.com/groups/traderun" target="_blank"><img src="group.png"></a>
+</div>
+</div>
+<div id = "uidinfo" align="center"></div>
+</div>
