@@ -1,9 +1,12 @@
 
 <html>
 <head>
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 <script>
 	var ws = new WebSocket("ws://localhost:47477/");
-	window.RufflePlayer.config = {
+	let player = ruffle.createPlayer();
+	player.config = {
+	    autoplay: "auto",
 	  socketProxy: [
 	    {
 	      host: "173.236.42.2", // The address of the server that Flash tries to connect to
@@ -13,7 +16,6 @@
 	  ]
 	};
 </script>
-<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 <script type="text/javascript" src="swfobject.js"></script>
 <script type="text/javascript">
 var lifetime = 0;
