@@ -4,16 +4,15 @@
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 <script>
 	var ws = new WebSocket("ws://localhost:47477/");
-	let player = ruffle.createPlayer();
-	player.config = {
-	    autoplay: "auto",
-	  socketProxy: [
-	    {
-	      host: "173.236.42.2", // The address of the server that Flash tries to connect to
-	      port: 443, // The port that Flash tries to connect to
-	      proxyUrl: "ws://localhost:47477", // The actual proxy that Ruffle will connect to, instead of the above server
-	    }
-	  ]
+	window.RufflePlayer.config = {
+		  autoplay: "auto",
+		  socketProxy: [
+		    {
+		      host: "173.236.42.2", // The address of the server that Flash tries to connect to
+		      port: 443, // The port that Flash tries to connect to
+		      proxyUrl: "ws://localhost:47477", // The actual proxy that Ruffle will connect to, instead of the above server
+		    }
+		  ]
 	};
 </script>
 <script type="text/javascript" src="swfobject.js"></script>
