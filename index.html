@@ -2,6 +2,21 @@
 <html>
 <head>
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+window.RufflePlayer.config = {
+     // Start playing the content automatically, without audio if the browser in use does not allow audio to autoplay
+    "autoplay": "on",
+    // Do not show an overlay to unmute the content while it plays; when the content area receives its first interaction, it will unmute
+    "unmuteOverlay": "hidden",
+     // Do not show a splash screen before the content loads; the content area will remain blank until Ruffle fully loads the content
+    "splashScreen": false,
+  socketProxy: [
+    {
+      host: "127.0.0.1", // The address of the server that Flash tries to connect to
+      port: 83475, // The port that Flash tries to connect to
+      proxyUrl: "ws://127.0.0.1:83475", // The actual proxy that Ruffle will connect to, instead of the above server
+    }
+  ]
+}
 <script type="text/javascript" src="swfobject.js"></script>
 <script type="text/javascript">
 var lifetime = 0;
